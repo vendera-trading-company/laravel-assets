@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc55a17081c66266c0c33cf9057542ff",
+    "content-hash": "a2a27897ffcad90d223baaa5c2f8eea1",
     "packages": [
         {
             "name": "vendera-trading-company/laravel-highway",
@@ -8431,7 +8431,9 @@
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.2"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
