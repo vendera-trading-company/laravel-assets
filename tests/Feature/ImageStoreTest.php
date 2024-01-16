@@ -62,5 +62,7 @@ class ImageStoreTest extends TestCase
         $image->delete();
 
         $this->assertFalse(Storage::disk($image->disk)->exists($image->relative_path));
+
+        $this->assertDatabaseCount('laravel_asset_images', 0);
     }
 }

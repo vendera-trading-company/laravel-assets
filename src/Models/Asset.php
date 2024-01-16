@@ -23,14 +23,16 @@ abstract class Asset extends Model
 
         static::deleting(function ($model) {
             if (empty($model->relative_path)) {
-                return null;
+                return;
             }
 
             if (!empty($model->relative_path)) {
-                return Storage::disk($model->disk)->delete($model->relative_path);
+                Storage::disk($model->disk)->delete($model->relative_path);
+                return;
             }
 
-            return Storage::delete($model->relative_path);
+            Storage::delete($model->relative_path);
+            return;
         });
     }
 

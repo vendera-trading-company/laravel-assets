@@ -62,5 +62,7 @@ class FileStoreTest extends TestCase
         $file->delete();
 
         $this->assertFalse(Storage::disk($file->disk)->exists($file->relative_path));
+
+        $this->assertDatabaseCount('laravel_asset_files', 0);
     }
 }
