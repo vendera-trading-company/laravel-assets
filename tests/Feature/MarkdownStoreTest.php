@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use VenderaTradingCompany\LaravelAssets\Actions\File\FileStore;
 use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
 use VenderaTradingCompany\PHPActions\Action;
 
