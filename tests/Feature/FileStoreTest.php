@@ -11,6 +11,8 @@ class FileStoreTest extends TestCase
 {
     public function testFileCanBeStored()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_files', 0);
 
         $file = Action::run(FileStore::class, [
@@ -27,6 +29,8 @@ class FileStoreTest extends TestCase
 
     public function testFileCanBeStoredWithRequest()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_files', 0);
 
         $response = $this->post(route('file.file.store'), [
@@ -40,6 +44,8 @@ class FileStoreTest extends TestCase
 
     public function testFileCanBeDeleted()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_files', 0);
 
         $file = Action::run(FileStore::class, [

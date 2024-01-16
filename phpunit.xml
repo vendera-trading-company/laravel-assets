@@ -5,7 +5,7 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<env name="DB_CONNECTION" value="testing"/>
+		<env name="DB_CONNECTION" value="testing" />
 		<env name="APP_KEY" value="base64:+2tZlQest4U7k66qggDMnEP4fYGP6n8qKO5Yl4GuXwE=" />
 	</php>
 </phpunit>

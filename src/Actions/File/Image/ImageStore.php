@@ -2,6 +2,7 @@
 
 namespace VenderaTradingCompany\LaravelAssets\Actions\File\Image;
 
+use VenderaTradingCompany\LaravelAssets\Actions\Image\ImageStore as ImageImageStore;
 use VenderaTradingCompany\PHPActions\Action;
 
 class ImageStore extends Action
@@ -14,10 +15,17 @@ class ImageStore extends Action
 
     public function handle()
     {
-        $image = Action::run(ImageStore::class)->getData('image');
+        $image = Action::run(ImageImageStore::class)->getData('image');
+
+        if (empty($image)) {
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
 
         return response()->json([
-            'image' => $image
+            'image' => $image,
+            'image_id' => $image->id
         ]);
     }
 }

@@ -5,10 +5,10 @@ use VenderaTradingCompany\LaravelAssets\Models\File as ModelsFile;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\LaravelAssets\Routing\File;
 
-$middlewares = config('laravelassets.middlewares');
-$routes_enabled = config('laravelassets.routes.enabled', true);
+$middlewares = config('laravelassets.middlewares', 'web');
+$routes = config('laravelassets.routes', true);
 
-if ($routes_enabled) {
+if ($routes) {
     if (!empty($middlewares)) {
         Route::prefix('filesystem')->middleware($middlewares)->group(function () {
             File::post(Image::class, 'store', 'store');

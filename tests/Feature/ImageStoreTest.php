@@ -11,6 +11,8 @@ class ImageStoreTest extends TestCase
 {
     public function testImageCanBeStored()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_images', 0);
 
         $image = Action::run(ImageStore::class, [
@@ -27,6 +29,8 @@ class ImageStoreTest extends TestCase
 
     public function testImageCanBeStoredWithRequest()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_images', 0);
 
         $response = $this->post(route('file.image.store'), [
@@ -40,6 +44,8 @@ class ImageStoreTest extends TestCase
 
     public function testImageCanBeDeleted()
     {
+        Storage::fake('local');
+
         $this->assertDatabaseCount('laravel_asset_images', 0);
 
         $image = Action::run(ImageStore::class, [
