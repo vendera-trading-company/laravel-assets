@@ -1,13 +1,13 @@
 <?php
 
-namespace VenderaTradingCompany\LaravelAssets\Actions\Image;
+namespace VenderaTradingCompany\LaravelAssets\Actions\File;
 
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
-use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
+use VenderaTradingCompany\LaravelAssets\Models\File;
 
-class ImageStore extends Action
+class FileStore extends Action
 {
     protected $secure = [
         'disk',
@@ -52,7 +52,7 @@ class ImageStore extends Action
 
         $id = now()->timestamp . '_' . strtolower(Str::random(32));
 
-        $image = Image::create([
+        $file_model = File::create([
             'id' => $id,
             'absolute_path' => $absolute_path,
             'relative_path' => $relative_path,
@@ -60,7 +60,7 @@ class ImageStore extends Action
         ]);
 
         return [
-            'image' => $image
+            'file' => $file_model
         ];
     }
 }

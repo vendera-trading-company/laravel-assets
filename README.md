@@ -4,10 +4,15 @@
 
 ## Features:
 - Assets
+- Uploads
 
 ## Usage
 ```
 composer require vendera-trading-company/laravel-assets
+```
+
+```
+implement VenderaTradingCompany\LaravelAssets\Providers\LaravelAssetsProvider
 ```
 
 Vendera Trading Company<br>
