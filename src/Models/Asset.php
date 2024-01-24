@@ -48,4 +48,17 @@ abstract class Asset extends Model
 
         return Storage::url($this->relative_path);
     }
+
+    public function content(): mixed
+    {
+        if (empty($this->relative_path)) {
+            return null;
+        }
+
+        if (!empty($this->relative_path)) {
+            return Storage::disk($this->disk)->get($this->relative_path);
+        }
+
+        return Storage::get($this->relative_path);
+    }
 }

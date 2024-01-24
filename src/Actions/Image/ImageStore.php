@@ -42,11 +42,10 @@ class ImageStore extends Action
             'data' => $file
         ]);
 
-        $absolute_path = $stored_file->getData('absolute_path');
         $relative_path = $stored_file->getData('relative_path');
         $disk = $stored_file->getData('disk');
 
-        if (empty($absolute_path) || empty($relative_path)) {
+        if (empty($relative_path)) {
             return;
         }
 
@@ -54,7 +53,6 @@ class ImageStore extends Action
 
         $image = Image::create([
             'id' => $id,
-            'absolute_path' => $absolute_path,
             'relative_path' => $relative_path,
             'disk' => $disk
         ]);

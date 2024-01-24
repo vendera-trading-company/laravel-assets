@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('disk')->nullable();
             $table->string('relative_path')->nullable();
-            $table->string('absolute_path')->nullable();
             $table->timestamps();
         });
     }

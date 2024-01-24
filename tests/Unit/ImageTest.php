@@ -14,7 +14,6 @@ class ImageTest extends TestCase
                 'id',
                 'disk',
                 'relative_path',
-                'absolute_path',
             ])
         );
     }

@@ -27,21 +27,6 @@ class FileStoreTest extends TestCase
         $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
     }
 
-    public function testFileCanBeStoredWithRequest()
-    {
-        Storage::fake('local');
-
-        $this->assertDatabaseCount('laravel_asset_files', 0);
-
-        $response = $this->post(route('file.file.store'), [
-            'file' => 'test_file',
-        ]);
-
-        $this->assertDatabaseCount('laravel_asset_files', 1);
-
-        $this->assertNotEmpty($response->json('file'));
-    }
-
     public function testFileCanBeDeleted()
     {
         Storage::fake('local');

@@ -27,21 +27,6 @@ class ImageStoreTest extends TestCase
         $this->assertTrue(Storage::disk($image->disk)->exists($image->relative_path));
     }
 
-    public function testImageCanBeStoredWithRequest()
-    {
-        Storage::fake('local');
-
-        $this->assertDatabaseCount('laravel_asset_images', 0);
-
-        $response = $this->post(route('file.image.store'), [
-            'file' => 'test_file',
-        ]);
-
-        $this->assertDatabaseCount('laravel_asset_images', 1);
-
-        $this->assertNotEmpty($response->json('image'));
-    }
-
     public function testImageCanBeDeleted()
     {
         Storage::fake('local');

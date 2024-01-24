@@ -41,15 +41,16 @@ class AssetStore extends Action
         $relative_path = $path . $name;
 
         if (!empty($disk)) {
-            Storage::disk($disk)->put($relative_path, $data);
-            $absolute_path = Storage::disk($disk)->path($relative_path);
+            if (!Storage::disk($disk)->put($relative_path, $data)) {
+                return;
+            }
         } else {
-            Storage::put($relative_path, $data);
-            $absolute_path = Storage::path($relative_path);
+            if (!Storage::put($relative_path, $data)) {
+                return;
+            }
         }
 
         return [
-            'absolute_path' => $absolute_path,
             'relative_path' => $relative_path,
             'disk' => $disk,
         ];
