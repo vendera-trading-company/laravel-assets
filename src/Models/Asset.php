@@ -49,7 +49,7 @@ abstract class Asset extends Model
         return Storage::url($this->relative_path);
     }
 
-    public function content(): mixed
+    public function content(): string | null
     {
         if (empty($this->relative_path)) {
             return null;
@@ -60,5 +60,18 @@ abstract class Asset extends Model
         }
 
         return Storage::get($this->relative_path);
+    }
+
+    public function download(string | null $name = null, array $headers = []): mixed
+    {
+        if (empty($this->relative_path)) {
+            return null;
+        }
+
+        if (!empty($this->relative_path)) {
+            return Storage::disk($this->disk)->download($this->relative_path, $name, $headers);
+        }
+
+        return Storage::get($this->relative_path, $name, $headers);
     }
 }

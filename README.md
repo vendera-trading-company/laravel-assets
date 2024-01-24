@@ -4,7 +4,6 @@
 
 ## Features:
 - Assets
-- Uploads
 
 ## Usage
 ```

@@ -30,16 +30,16 @@ class MarkdownStore extends Action
             'file' => $raw
         ])->getData('file');
 
+        if (empty($raw_file)) {
+            return;
+        }
+
         $formatted_file = Action::run(FileStore::class, [
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
             'file' => $formatted
         ])->getData('file');
-
-        if (empty($raw_file)) {
-            return;
-        }
 
         if (empty($formatted_file)) {
             return;

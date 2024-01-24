@@ -49,7 +49,7 @@ class ImageStore extends Action
             return;
         }
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32));
+        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_image';
 
         $image = Image::create([
             'id' => $id,

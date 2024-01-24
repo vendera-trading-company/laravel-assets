@@ -49,7 +49,7 @@ class FileStore extends Action
             return;
         }
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32));
+        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_file';
 
         $file_model = File::create([
             'id' => $id,
