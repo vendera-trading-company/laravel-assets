@@ -23,6 +23,7 @@ class ImageStore extends Action
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
+        $base64 = $this->getData('base64');
 
         if (empty($url) && empty($file)) {
             return;
@@ -36,10 +37,8 @@ class ImageStore extends Action
             }
         }
 
-        $base64DecodedImage = $this->decodeBase64Image($file);
-
-        if (!empty($base64DecodedImage)) {
-            $file = $base64DecodedImage;
+        if ($base64) {
+            $file = $this->decodeBase64Image($file);
         }
 
         $stored_file = Action::run(AssetStore::class, [
@@ -76,30 +75,12 @@ class ImageStore extends Action
             $image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
             $image = str_replace(' ', '+', $image);
 
-            if ($this->is_base64_encoded($image)) {
-                $image = base64_decode($image);
+            $image = base64_decode($image);
 
-                return $image;
-            }
+            return $image;
         } catch (Exception $e) {
         }
 
         return null;
-    }
-
-    private function is_base64_encoded($str)
-    {
-        try {
-            $decoded_str = base64_decode($str);
-            $Str1 = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $decoded_str);
-            if ($Str1 != $decoded_str || $Str1 == '') {
-                return false;
-            }
-
-            return true;
-        } catch (Exception $e) {
-        }
-
-        return false;
     }
 }
