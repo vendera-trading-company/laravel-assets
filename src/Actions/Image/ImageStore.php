@@ -2,6 +2,7 @@
 
 namespace VenderaTradingCompany\LaravelAssets\Actions\Image;
 
+use Exception;
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
@@ -35,6 +36,12 @@ class ImageStore extends Action
             }
         }
 
+        $base64DecodedImage = $this->decodeBase64Image($file);
+
+        if (!empty($base64DecodedImage)) {
+            $file = $base64DecodedImage;
+        }
+
         $stored_file = Action::run(AssetStore::class, [
             'name' => $name,
             'disk' => $disk,
@@ -60,5 +67,39 @@ class ImageStore extends Action
         return [
             'image' => $image
         ];
+    }
+
+    private function decodeBase64Image($data)
+    {
+        try {
+            $image = $data;
+            $image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
+            $image = str_replace(' ', '+', $image);
+
+            if ($this->is_base64_encoded($image)) {
+                $image = base64_decode($image);
+
+                return $image;
+            }
+        } catch (Exception $e) {
+        }
+
+        return null;
+    }
+
+    private function is_base64_encoded($str)
+    {
+        try {
+            $decoded_str = base64_decode($str);
+            $Str1 = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $decoded_str);
+            if ($Str1 != $decoded_str || $Str1 == '') {
+                return false;
+            }
+
+            return true;
+        } catch (Exception $e) {
+        }
+
+        return false;
     }
 }
