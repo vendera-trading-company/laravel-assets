@@ -26,7 +26,7 @@ abstract class Asset extends Model
                 return;
             }
 
-            if (!empty($model->relative_path)) {
+            if (!empty($model->disk)) {
                 Storage::disk($model->disk)->delete($model->relative_path);
                 return;
             }
@@ -42,11 +42,24 @@ abstract class Asset extends Model
             return null;
         }
 
-        if (!empty($this->relative_path)) {
+        if (!empty($this->disk)) {
             return Storage::disk($this->disk)->url($this->relative_path);
         }
 
         return Storage::url($this->relative_path);
+    }
+
+    public function path(): string | null
+    {
+        if (empty($this->relative_path)) {
+            return null;
+        }
+
+        if (!empty($this->disk)) {
+            return Storage::disk($this->disk)->path($this->relative_path);
+        }
+
+        return Storage::path($this->relative_path);
     }
 
     public function content(): string | null
@@ -55,7 +68,7 @@ abstract class Asset extends Model
             return null;
         }
 
-        if (!empty($this->relative_path)) {
+        if (!empty($this->disk)) {
             return Storage::disk($this->disk)->get($this->relative_path);
         }
 
@@ -68,7 +81,7 @@ abstract class Asset extends Model
             return null;
         }
 
-        if (!empty($this->relative_path)) {
+        if (!empty($this->disk)) {
             return Storage::disk($this->disk)->download($this->relative_path, $name, $headers);
         }
 
