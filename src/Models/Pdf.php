@@ -45,4 +45,50 @@ class Pdf extends Model
     {
         return $this->belongsTo(Markdown::class, 'footer_id');
     }
+
+    public function raw()
+    {
+        $header = $this->header?->raw?->content();
+        $main = $this->main?->raw?->content();
+        $footer = $this->footer?->raw?->content();
+
+        $text = '';
+
+        if (!empty($header)) {
+            $text .= '<header>' . $header . '</header>' . PHP_EOL;
+        }
+
+        if (!empty($main)) {
+            $text .= '<main>' . $main . '</main>' . PHP_EOL;
+        }
+
+        if (!empty($footer)) {
+            $text .= '<footer>' . $footer . '</footer>';
+        }
+
+        return $text;
+    }
+
+    public function formatted()
+    {
+        $header = $this->header?->formatted?->content();
+        $main = $this->main?->formatted?->content();
+        $footer = $this->footer?->formatted?->content();
+
+        $text = '';
+
+        if (!empty($header)) {
+            $text .= '<header>' . $header . '</header>' . PHP_EOL;
+        }
+
+        if (!empty($main)) {
+            $text .= '<main>' . $main . '</main>' . PHP_EOL;
+        }
+
+        if (!empty($footer)) {
+            $text .= '<footer>' . $footer . '</footer>';
+        }
+
+        return $text;
+    }
 }
