@@ -19,7 +19,8 @@ class MarkdownStoreTest extends TestCase
         $markdown = Action::run(MarkdownStore::class, [
             'path' => 'files',
             'raw' => '# Test',
-            'formatted' => '<h1>Test</h1>'
+            'formatted' => '<h1>Test</h1>',
+            'database' => false,
         ])->getData('markdown');
 
         $this->assertNotEmpty($markdown);
@@ -64,7 +65,8 @@ class MarkdownStoreTest extends TestCase
         $markdown = Action::run(MarkdownStore::class, [
             'path' => 'files',
             'raw' => '# Test',
-            'formatted' => '<h1>Test</h1>'
+            'formatted' => '<h1>Test</h1>',
+            'database' => false,
         ])->getData('markdown');
 
         $this->assertNotEmpty($markdown);

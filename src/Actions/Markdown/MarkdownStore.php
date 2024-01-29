@@ -21,7 +21,7 @@ class MarkdownStore extends Action
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
-        $database = $this->getData('database');
+        $database = $this->getData('database', true);
         $raw = $this->getData('raw');
         $formatted = $this->getData('formatted');
 
