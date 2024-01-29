@@ -24,6 +24,10 @@ class PdfStore extends Action
         $footer_formatted = $this->getData('footer_formatted');
         $meta = $this->getData('meta');
 
+        $header = null;
+        $main = null;
+        $footer = null;
+
         if (!empty($header_raw) && !empty($header_formatted)) {
             $header = Action::run(MarkdownStore::class, [
                 'raw' => $header_raw,

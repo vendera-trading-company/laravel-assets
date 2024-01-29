@@ -36,6 +36,10 @@ class PdfUpdate extends Action
             return;
         }
 
+        $header = null;
+        $main = null;
+        $footer = null;
+
         if (!empty($header_raw) && !empty($header_formatted)) {
             if (!empty($pdf->header_id)) {
                 $header = Action::run(MarkdownUpdate::class, [
