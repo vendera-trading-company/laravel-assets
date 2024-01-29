@@ -9,8 +9,13 @@ use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
 
 class PdfStore extends Action
 {
+    protected $secure = [
+        'database'
+    ];
+
     public function handle()
     {
+        $database = $this->getData('database');
         $header_raw = $this->getData('header_raw');
         $header_formatted = $this->getData('header_formatted');
         $main_raw = $this->getData('main_raw');
@@ -23,6 +28,7 @@ class PdfStore extends Action
             $header = Action::run(MarkdownStore::class, [
                 'raw' => $header_raw,
                 'formatted' => $header_formatted,
+                'database' => $database,
             ])->getData('markdown');
 
             if (empty($header)) {
@@ -34,6 +40,7 @@ class PdfStore extends Action
             $main = Action::run(MarkdownStore::class, [
                 'raw' => $main_raw,
                 'formatted' => $main_formatted,
+                'database' => $database,
             ])->getData('markdown');
 
             if (empty($main)) {
@@ -45,6 +52,7 @@ class PdfStore extends Action
             $footer = Action::run(MarkdownStore::class, [
                 'raw' => $footer_raw,
                 'formatted' => $footer_formatted,
+                'database' => $database,
             ])->getData('markdown');
 
             if (empty($footer)) {

@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class ImageStore extends Action
 {
     protected $secure = [
+        'database',
         'disk',
         'path',
         'name'
@@ -20,6 +21,7 @@ class ImageStore extends Action
     {
         $url = $this->getData('url');
         $file = $this->getData('file');
+        $database = $this->getData('database');
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
@@ -41,27 +43,34 @@ class ImageStore extends Action
             $file = $this->decodeBase64Image($file);
         }
 
-        $stored_file = Action::run(AssetStore::class, [
-            'name' => $name,
-            'disk' => $disk,
-            'path' => $path,
-            'data' => $file
-        ]);
-
-        $relative_path = $stored_file->getData('relative_path');
-        $disk = $stored_file->getData('disk');
-
-        if (empty($relative_path)) {
-            return;
-        }
-
         $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_image';
 
-        $image = Image::create([
+        $image_data = [
             'id' => $id,
-            'relative_path' => $relative_path,
-            'disk' => $disk
-        ]);
+        ];
+
+        if (!$database) {
+            $stored_file = Action::run(AssetStore::class, [
+                'name' => $name,
+                'disk' => $disk,
+                'path' => $path,
+                'data' => $file
+            ]);
+
+            $relative_path = $stored_file->getData('relative_path');
+            $disk = $stored_file->getData('disk');
+
+            if (empty($relative_path)) {
+                return;
+            }
+
+            $image_data['relative_path'] = $relative_path;
+            $image_data['disk'] = $disk;
+        } else {
+            $image_data['data'] = $file;
+        }
+
+        $image = Image::create($image_data);
 
         return [
             'image' => $image

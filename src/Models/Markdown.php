@@ -14,7 +14,7 @@ class Markdown extends Model
 
     protected $keyType = 'string';
 
-    protected $table = 'laravel_asset_markdowns';
+    protected $table = 'markdowns';
 
     public static function boot()
     {

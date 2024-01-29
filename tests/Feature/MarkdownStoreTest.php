@@ -13,8 +13,8 @@ class MarkdownStoreTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_markdowns', 0);
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('markdowns', 0);
+        $this->assertDatabaseCount('files', 0);
 
         $markdown = Action::run(MarkdownStore::class, [
             'path' => 'files',
@@ -24,18 +24,42 @@ class MarkdownStoreTest extends TestCase
 
         $this->assertNotEmpty($markdown);
 
-        $this->assertDatabaseCount('laravel_asset_markdowns', 1);
-        $this->assertDatabaseCount('laravel_asset_files', 2);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
 
         $this->assertTrue(Storage::disk($markdown->formatted->disk)->exists($markdown->formatted->relative_path));
+        $this->assertTrue(Storage::disk($markdown->raw->disk)->exists($markdown->raw->relative_path));
+    }
+
+    public function testMarkdownFileCanBeStoredAsData()
+    {
+        Storage::fake('local');
+
+        $this->assertDatabaseCount('markdowns', 0);
+        $this->assertDatabaseCount('files', 0);
+
+        $markdown = Action::run(MarkdownStore::class, [
+            'path' => 'files',
+            'raw' => '# Test',
+            'formatted' => '<h1>Test</h1>',
+            'database' => true,
+        ])->getData('markdown');
+
+        $this->assertNotEmpty($markdown);
+
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('<h1>Test</h1>', $markdown->formatted->content());
+        $this->assertEquals('# Test', $markdown->raw->content());
     }
 
     public function testFileCanBeDeleted()
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_markdowns', 0);
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('markdowns', 0);
+        $this->assertDatabaseCount('files', 0);
 
         $markdown = Action::run(MarkdownStore::class, [
             'path' => 'files',
@@ -45,8 +69,8 @@ class MarkdownStoreTest extends TestCase
 
         $this->assertNotEmpty($markdown);
 
-        $this->assertDatabaseCount('laravel_asset_markdowns', 1);
-        $this->assertDatabaseCount('laravel_asset_files', 2);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
 
         $this->assertTrue(Storage::disk($markdown->formatted->disk)->exists($markdown->formatted->relative_path));
 
@@ -54,7 +78,7 @@ class MarkdownStoreTest extends TestCase
 
         $this->assertFalse(Storage::disk($markdown->formatted->disk)->exists($markdown->formatted->relative_path));
 
-        $this->assertDatabaseCount('laravel_asset_markdowns', 0);
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('markdowns', 0);
+        $this->assertDatabaseCount('files', 0);
     }
 }

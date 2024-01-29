@@ -10,10 +10,11 @@ class FileTest extends TestCase
     public function testDatabaseHasExpectedColumns()
     {
         $this->assertTrue(
-            Schema::hasColumns('laravel_asset_files', [
+            Schema::hasColumns('files', [
                 'id',
                 'disk',
                 'relative_path',
+                'data'
             ])
         );
     }

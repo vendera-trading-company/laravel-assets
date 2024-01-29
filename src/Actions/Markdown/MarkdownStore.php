@@ -12,7 +12,8 @@ class MarkdownStore extends Action
     protected $secure = [
         'disk',
         'path',
-        'name'
+        'name',
+        'database'
     ];
 
     public function handle()
@@ -20,6 +21,7 @@ class MarkdownStore extends Action
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
+        $database = $this->getData('database');
         $raw = $this->getData('raw');
         $formatted = $this->getData('formatted');
 
@@ -27,7 +29,8 @@ class MarkdownStore extends Action
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
-            'file' => $raw
+            'file' => $raw,
+            'database' => $database
         ])->getData('file');
 
         if (empty($raw_file)) {
@@ -38,7 +41,8 @@ class MarkdownStore extends Action
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
-            'file' => $formatted
+            'file' => $formatted,
+            'database' => $database
         ])->getData('file');
 
         if (empty($formatted_file)) {

@@ -10,7 +10,7 @@ class PdfTest extends TestCase
     public function testDatabaseHasExpectedColumns()
     {
         $this->assertTrue(
-            Schema::hasColumns('laravel_asset_pdfs', [
+            Schema::hasColumns('pdfs', [
                 'id',
                 'header_id',
                 'main_id',

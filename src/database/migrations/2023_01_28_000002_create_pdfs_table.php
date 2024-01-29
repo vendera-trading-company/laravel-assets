@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('laravel_asset_images', function (Blueprint $table) {
+        Schema::create('pdfs', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('disk')->nullable();
-            $table->string('relative_path')->nullable();
+            $table->string('header_id')->nullable();
+            $table->string('main_id')->nullable();
+            $table->string('footer_id')->nullable();
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('laravel_asset_images');
+        Schema::dropIfExists('pdfs');
     }
 };

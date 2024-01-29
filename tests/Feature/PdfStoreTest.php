@@ -13,7 +13,7 @@ class PdfStoreTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 0);
+        $this->assertDatabaseCount('pdfs', 0);
 
         $pdf = Action::run(PdfStore::class, [
             'header_raw' => '# Test',
@@ -26,14 +26,14 @@ class PdfStoreTest extends TestCase
 
         $this->assertNotEmpty($pdf);
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 1);
+        $this->assertDatabaseCount('pdfs', 1);
     }
 
     public function testPdfCanBeReadedAsRaw()
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 0);
+        $this->assertDatabaseCount('pdfs', 0);
 
         $pdf = Action::run(PdfStore::class, [
             'header_raw' => '# Test',
@@ -50,14 +50,14 @@ class PdfStoreTest extends TestCase
 
         $this->assertEquals($expected, $pdf->raw());
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 1);
+        $this->assertDatabaseCount('pdfs', 1);
     }
 
     public function testPdfCanBeReadedAsFormatted()
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 0);
+        $this->assertDatabaseCount('pdfs', 0);
 
         $pdf = Action::run(PdfStore::class, [
             'header_raw' => '# Test',
@@ -74,6 +74,6 @@ class PdfStoreTest extends TestCase
 
         $this->assertEquals($expected, $pdf->formatted());
 
-        $this->assertDatabaseCount('laravel_asset_pdfs', 1);
+        $this->assertDatabaseCount('pdfs', 1);
     }
 }

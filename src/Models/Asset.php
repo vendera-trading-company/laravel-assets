@@ -15,8 +15,6 @@ abstract class Asset extends Model
 
     protected $keyType = 'string';
 
-    protected $table = 'laravel_asset_assets';
-
     public static function boot()
     {
         parent::boot();
@@ -64,6 +62,10 @@ abstract class Asset extends Model
 
     public function content(): string | null
     {
+        if (!empty($this->data)) {
+            return $this->data;
+        }
+
         if (empty($this->relative_path)) {
             return null;
         }

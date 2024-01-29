@@ -14,7 +14,7 @@ class Pdf extends Model
 
     protected $keyType = 'string';
 
-    protected $table = 'laravel_asset_pdfs';
+    protected $table = 'pdfs';
 
     protected $casts = [
         'meta' => 'array'

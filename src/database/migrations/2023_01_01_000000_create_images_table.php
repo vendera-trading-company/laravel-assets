@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('laravel_asset_markdowns', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('raw_id');
-            $table->string('formatted_id');
+            $table->string('disk')->nullable();
+            $table->string('relative_path')->nullable();
+            $table->string('data')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('laravel_asset_markdowns');
+        Schema::dropIfExists('images');
     }
 };

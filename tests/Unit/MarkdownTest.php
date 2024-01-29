@@ -10,7 +10,7 @@ class MarkdownTest extends TestCase
     public function testDatabaseHasExpectedColumns()
     {
         $this->assertTrue(
-            Schema::hasColumns('laravel_asset_markdowns', [
+            Schema::hasColumns('markdowns', [
                 'id',
                 'raw_id',
                 'formatted_id',

@@ -13,7 +13,7 @@ class ImageStoreTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_images', 0);
+        $this->assertDatabaseCount('images', 0);
 
         $image = Action::run(ImageStore::class, [
             'file' => 'test_file',
@@ -22,16 +22,37 @@ class ImageStoreTest extends TestCase
 
         $this->assertNotEmpty($image);
 
-        $this->assertDatabaseCount('laravel_asset_images', 1);
+        $this->assertDatabaseCount('images', 1);
 
         $this->assertTrue(Storage::disk($image->disk)->exists($image->relative_path));
+
+        $this->assertEmpty($image->data);
+    }
+
+    public function testImageCanBeStoredAsData()
+    {
+        Storage::fake('local');
+
+        $this->assertDatabaseCount('images', 0);
+
+        $image = Action::run(ImageStore::class, [
+            'file' => 'test_file',
+            'path' => 'images',
+            'database' => true,
+        ])->getData('image');
+
+        $this->assertNotEmpty($image);
+
+        $this->assertDatabaseCount('images', 1);
+
+        $this->assertNotEmpty($image->content());
     }
 
     public function testImageCanBeDeleted()
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_images', 0);
+        $this->assertDatabaseCount('images', 0);
 
         $image = Action::run(ImageStore::class, [
             'file' => 'test_file',
@@ -40,7 +61,7 @@ class ImageStoreTest extends TestCase
 
         $this->assertNotEmpty($image);
 
-        $this->assertDatabaseCount('laravel_asset_images', 1);
+        $this->assertDatabaseCount('images', 1);
 
         $this->assertTrue(Storage::disk($image->disk)->exists($image->relative_path));
 
@@ -48,6 +69,6 @@ class ImageStoreTest extends TestCase
 
         $this->assertFalse(Storage::disk($image->disk)->exists($image->relative_path));
 
-        $this->assertDatabaseCount('laravel_asset_images', 0);
+        $this->assertDatabaseCount('images', 0);
     }
 }

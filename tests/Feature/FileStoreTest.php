@@ -13,7 +13,7 @@ class FileStoreTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('files', 0);
 
         $file = Action::run(FileStore::class, [
             'file' => 'test_file',
@@ -22,7 +22,7 @@ class FileStoreTest extends TestCase
 
         $this->assertNotEmpty($file);
 
-        $this->assertDatabaseCount('laravel_asset_files', 1);
+        $this->assertDatabaseCount('files', 1);
 
         $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
     }
@@ -31,7 +31,7 @@ class FileStoreTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('files', 0);
 
         $file = Action::run(FileStore::class, [
             'file' => 'test_file',
@@ -40,7 +40,7 @@ class FileStoreTest extends TestCase
 
         $this->assertNotEmpty($file);
 
-        $this->assertDatabaseCount('laravel_asset_files', 1);
+        $this->assertDatabaseCount('files', 1);
 
         $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
 
@@ -48,6 +48,6 @@ class FileStoreTest extends TestCase
 
         $this->assertFalse(Storage::disk($file->disk)->exists($file->relative_path));
 
-        $this->assertDatabaseCount('laravel_asset_files', 0);
+        $this->assertDatabaseCount('files', 0);
     }
 }

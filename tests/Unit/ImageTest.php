@@ -10,10 +10,11 @@ class ImageTest extends TestCase
     public function testDatabaseHasExpectedColumns()
     {
         $this->assertTrue(
-            Schema::hasColumns('laravel_asset_images', [
+            Schema::hasColumns('images', [
                 'id',
                 'disk',
                 'relative_path',
+                'data'
             ])
         );
     }
