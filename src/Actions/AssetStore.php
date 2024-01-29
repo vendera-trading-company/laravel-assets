@@ -12,7 +12,8 @@ class AssetStore extends Action
         'data',
         'disk',
         'path',
-        'name'
+        'name',
+        'relative_path'
     ];
 
     public function handle()
@@ -21,24 +22,27 @@ class AssetStore extends Action
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
+        $relative_path = $this->getData('relative_path');
 
         if (empty($data)) {
             return;
         }
 
-        if (empty($path)) {
-            $path = 'files/';
-        }
+        if (empty($relative_path)) {
+            if (empty($path)) {
+                $path = 'files/';
+            }
 
-        if (!str_ends_with($path, '/')) {
-            $path = $path . '/';
-        }
+            if (!str_ends_with($path, '/')) {
+                $path = $path . '/';
+            }
 
-        if (empty($name)) {
-            $name = now()->timestamp . '_' . strtolower(Str::random(32));
-        }
+            if (empty($name)) {
+                $name = now()->timestamp . '_' . strtolower(Str::random(32));
+            }
 
-        $relative_path = $path . $name;
+            $relative_path = $path . $name;
+        }
 
         if (!empty($disk)) {
             if (!Storage::disk($disk)->put($relative_path, $data)) {
