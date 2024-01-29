@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('disk')->nullable();
-            $table->string('relative_path')->nullable();
-            $table->string('data')->nullable();
+            $table->text('relative_path')->nullable();
+            $table->longText('data')->nullable();
             $table->timestamps();
         });
     }
