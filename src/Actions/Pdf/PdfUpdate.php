@@ -122,11 +122,38 @@ class PdfUpdate extends Action
         }
 
         $pdf_data = [
-            'header_id' => $header?->id,
-            'main_id' => $main?->id,
-            'footer_id' => $footer?->id,
             'meta' => $meta,
         ];
+
+        if ($pdf->header_id != $header?->id) {
+            $pdf_data['header_id'] = $header?->id;
+        }
+
+        if ($pdf->main_id != $main?->id) {
+            $pdf_data['main_id'] = $main?->id;
+        }
+
+        if ($pdf->footer_id != $footer?->id) {
+            $pdf_data['footer_id'] = $footer?->id;
+        }
+
+        if (!empty($header_raw)) {
+            if ($header_raw != $header?->raw?->content()) {
+                return;
+            }
+        }
+
+        if (!empty($main_raw)) {
+            if ($main_raw != $main?->raw?->content()) {
+                return;
+            }
+        }
+
+        if (!empty($footer_raw)) {
+            if ($footer_raw != $footer?->raw?->content()) {
+                return;
+            }
+        }
 
         $pdf->update($pdf_data);
 

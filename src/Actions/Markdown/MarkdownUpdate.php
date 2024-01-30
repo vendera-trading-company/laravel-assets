@@ -50,6 +50,30 @@ class MarkdownUpdate extends Action
             return;
         }
 
+        $markdown_data = [];
+
+        if ($markdown->raw_id != $raw_file->id) {
+            $markdown_data['raw_id'] = $raw_file->id;
+        }
+
+        if ($markdown->formatted_id != $formatted_file->id) {
+            $markdown_data['formatted_id'] = $formatted_file->id;
+        }
+
+        if (!empty($raw)) {
+            if ($raw != $raw_file->content()) {
+                return;
+            }
+        }
+
+        if (!empty($formatted)) {
+            if ($formatted != $formatted_file->content()) {
+                return;
+            }
+        }
+
+        $markdown->update($markdown_data);
+
         return [
             'markdown' => $markdown
         ];
