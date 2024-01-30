@@ -5,7 +5,6 @@ namespace VenderaTradingCompany\LaravelAssets\Actions\Markdown;
 use VenderaTradingCompany\LaravelAssets\Models\Markdown;
 use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Actions\File\FileUpdate;
-use VenderaTradingCompany\PHPActions\Response;
 
 class MarkdownUpdate extends Action
 {
@@ -24,13 +23,13 @@ class MarkdownUpdate extends Action
         $formatted = $this->getData('formatted');
 
         if (empty($id)) {
-            return Response::error($this, 'empty_id');
+            return;
         }
 
         $markdown = Markdown::where('id', $id)->first();
 
         if (empty($markdown)) {
-            return Response::error($this, 'markdown_not_found');
+            return;
         }
 
         $raw_file = Action::run(FileUpdate::class, [
@@ -40,7 +39,7 @@ class MarkdownUpdate extends Action
         ])->getData('file');
 
         if (empty($raw_file)) {
-            return Response::error($this, 'raw_update_error');
+            return;
         }
 
         $formatted_file = Action::run(FileUpdate::class, [
@@ -50,7 +49,7 @@ class MarkdownUpdate extends Action
         ])->getData('file');
 
         if (empty($formatted_file)) {
-            return Response::error($this, 'formatted_update_error');
+            return;
         }
 
         $markdown_data = [];
@@ -65,13 +64,13 @@ class MarkdownUpdate extends Action
 
         if (!empty($raw)) {
             if ($raw != $raw_file->content()) {
-                return Response::error($this, 'raw_mismatch');
+                return;
             }
         }
 
         if (!empty($formatted)) {
             if ($formatted != $formatted_file->content()) {
-                return Response::error($this, 'formatted_mismatch');
+                return;
             }
         }
 

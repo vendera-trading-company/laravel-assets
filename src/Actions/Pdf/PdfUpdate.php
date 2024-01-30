@@ -4,9 +4,7 @@ namespace VenderaTradingCompany\LaravelAssets\Actions\Pdf;
 
 use VenderaTradingCompany\LaravelAssets\Models\Pdf;
 use VenderaTradingCompany\PHPActions\Action;
-use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
-use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownUpdate;
-use VenderaTradingCompany\PHPActions\Response;
+use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownUpdateOrStore;
 
 class PdfUpdate extends Action
 {
@@ -35,132 +33,93 @@ class PdfUpdate extends Action
         $meta = $this->getData('meta');
 
         if (empty($id)) {
-            return Response::error($this, 'empty_id');
+            return;
         }
 
         $pdf = Pdf::where('id', $id)->first();
 
         if (empty($pdf)) {
-            return Response::error($this, 'pdf_not_found');
-        }
-
-        $header = null;
-        $main = null;
-        $footer = null;
-
-        if (!empty($header_raw) && !empty($header_formatted)) {
-            if (!empty($pdf->header_id)) {
-                $header = Action::run(MarkdownUpdate::class, [
-                    'id' => $pdf->header_id,
-                    'raw' => $header_raw,
-                    'formatted' => $header_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($header)) {
-                    return Response::error($this, 'header_update_error');
-                }
-            } else {
-                $header = Action::run(MarkdownStore::class, [
-                    'raw' => $header_raw,
-                    'formatted' => $header_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($header)) {
-                    return Response::error($this, 'header_store_error');
-                }
-            }
-        } else {
-            $pdf->header?->delete();
-        }
-
-        if (!empty($main_raw) && !empty($main_formatted)) {
-            if (!empty($pdf->main_id)) {
-                $main = Action::run(MarkdownUpdate::class, [
-                    'id' => $pdf->main_id,
-                    'raw' => $main_raw,
-                    'formatted' => $main_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($main)) {
-                    return Response::error($this, 'main_update_error');
-                }
-            } else {
-                $main = Action::run(MarkdownStore::class, [
-                    'raw' => $main_raw,
-                    'formatted' => $main_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($main)) {
-                    return Response::error($this, 'main_store_error');
-                }
-            }
-        } else {
-            $pdf->main?->delete();
-        }
-
-        if (!empty($footer_raw) && !empty($footer_formatted)) {
-            if (!empty($pdf->footer_id)) {
-                $footer = Action::run(MarkdownUpdate::class, [
-                    'id' => $pdf->footer_id,
-                    'raw' => $footer_raw,
-                    'formatted' => $footer_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($footer)) {
-                    return Response::error($this, 'footer_update_error');
-                }
-            } else {
-                $footer = Action::run(MarkdownStore::class, [
-                    'raw' => $footer_raw,
-                    'formatted' => $footer_formatted,
-                    'database' => $database,
-                ])->getData('markdown');
-
-                if (empty($footer)) {
-                    return Response::error($this, 'footer_store_error');
-                }
-            }
-        } else {
-            $pdf->footer?->delete();
+            return;
         }
 
         $pdf_data = [
             'meta' => $meta,
         ];
 
-        if ($pdf->header_id != $header?->id) {
-            $pdf_data['header_id'] = $header?->id;
-        }
+        $header = null;
+        $main = null;
+        $footer = null;
 
-        if ($pdf->main_id != $main?->id) {
-            $pdf_data['main_id'] = $main?->id;
-        }
+        if (!empty($header_raw) && !empty($header_formatted)) {
+            $header = Action::run(MarkdownUpdateOrStore::class, [
+                'id' => $pdf->header_id,
+                'raw' => $header_raw,
+                'formatted' => $header_formatted,
+                'database' => $database,
+            ])->getData('markdown');
 
-        if ($pdf->footer_id != $footer?->id) {
-            $pdf_data['footer_id'] = $footer?->id;
-        }
+            if (empty($header)) {
+                return;
+            }
 
-        if (!empty($header_raw)) {
+            if ($pdf->header_id != $header?->id) {
+                $pdf_data['header_id'] = $header?->id;
+            }
+
             if ($header_raw != $header?->raw?->content()) {
-                return Response::error($this, 'raw_header_mismatch');
+                return;
             }
+        } else {
+            $pdf->header?->delete();
+            $pdf_data['header_id'] = null;
         }
 
-        if (!empty($main_raw)) {
+        if (!empty($main_raw) && !empty($main_formatted)) {
+            $main = Action::run(MarkdownUpdateOrStore::class, [
+                'id' => $pdf->main_id,
+                'raw' => $main_raw,
+                'formatted' => $main_formatted,
+                'database' => $database,
+            ])->getData('markdown');
+
+            if (empty($main)) {
+                return;
+            }
+
+            if ($pdf->main_id != $main?->id) {
+                $pdf_data['main_id'] = $main?->id;
+            }
+
             if ($main_raw != $main?->raw?->content()) {
-                return Response::error($this, 'raw_main_mismatch');
+                return;
             }
+        } else {
+            $pdf->main?->delete();
+            $pdf_data['main_id'] = null;
         }
 
-        if (!empty($footer_raw)) {
-            if ($footer_raw != $footer?->raw?->content()) {
-                return Response::error($this, 'raw_footer_mismatch');;
+        if (!empty($footer_raw) && !empty($footer_formatted)) {
+            $footer = Action::run(MarkdownUpdateOrStore::class, [
+                'id' => $pdf->footer_id,
+                'raw' => $footer_raw,
+                'formatted' => $footer_formatted,
+                'database' => $database,
+            ])->getData('markdown');
+
+            if (empty($footer)) {
+                return;
             }
+
+            if ($pdf->footer_id != $footer?->id) {
+                $pdf_data['footer_id'] = $footer?->id;
+            }
+
+            if ($footer_raw != $footer?->raw?->content()) {
+                return;
+            }
+        } else {
+            $pdf->footer?->delete();
+            $pdf_data['footer_id'] = null;
         }
 
         $pdf->update($pdf_data);
