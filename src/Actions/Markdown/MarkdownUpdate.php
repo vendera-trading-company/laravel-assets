@@ -10,7 +10,9 @@ class MarkdownUpdate extends Action
 {
     protected $secure = [
         'database',
-        'id'
+        'id',
+        'raw',
+        'formatted'
     ];
 
     public function handle()

@@ -11,7 +11,14 @@ class PdfUpdate extends Action
 {
     protected $secure = [
         'database',
-        'id'
+        'id',
+        'header_raw',
+        'header_formatted',
+        'main_raw',
+        'main_formatted',
+        'footer_raw',
+        'footer_formatted',
+        'meta'
     ];
 
     public function handle()

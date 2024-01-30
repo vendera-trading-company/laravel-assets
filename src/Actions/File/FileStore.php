@@ -13,7 +13,9 @@ class FileStore extends Action
         'database',
         'disk',
         'path',
-        'name'
+        'name',
+        'url',
+        'file'
     ];
 
     public function handle()

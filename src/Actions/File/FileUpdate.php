@@ -10,7 +10,9 @@ class FileUpdate extends Action
 {
     protected $secure = [
         'database',
-        'id'
+        'id',
+        'url',
+        'file'
     ];
 
     public function handle()

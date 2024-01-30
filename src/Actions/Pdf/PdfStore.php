@@ -10,7 +10,14 @@ use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
 class PdfStore extends Action
 {
     protected $secure = [
-        'database'
+        'database',
+        'header_raw',
+        'header_formatted',
+        'main_raw',
+        'main_formatted',
+        'footer_raw',
+        'footer_formatted',
+        'meta'
     ];
 
     public function handle()

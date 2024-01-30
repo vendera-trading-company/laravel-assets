@@ -13,7 +13,9 @@ class MarkdownStore extends Action
         'disk',
         'path',
         'name',
-        'database'
+        'database',
+        'raw',
+        'formatted'
     ];
 
     public function handle()

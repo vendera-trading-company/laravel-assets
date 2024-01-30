@@ -14,7 +14,10 @@ class ImageStore extends Action
         'database',
         'disk',
         'path',
-        'name'
+        'name',
+        'base64',
+        'url',
+        'file'
     ];
 
     public function handle()

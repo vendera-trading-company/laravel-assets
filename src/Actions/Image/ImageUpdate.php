@@ -12,6 +12,9 @@ class ImageUpdate extends Action
     protected $secure = [
         'id',
         'database',
+        'base64',
+        'url',
+        'file'
     ];
 
     public function handle()
