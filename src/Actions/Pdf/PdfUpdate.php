@@ -6,6 +6,7 @@ use VenderaTradingCompany\LaravelAssets\Models\Pdf;
 use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
 use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownUpdate;
+use VenderaTradingCompany\PHPActions\Response;
 
 class PdfUpdate extends Action
 {
@@ -34,13 +35,13 @@ class PdfUpdate extends Action
         $meta = $this->getData('meta');
 
         if (empty($id)) {
-            return;
+            return Response::error($this, 'empty_id');
         }
 
         $pdf = Pdf::where('id', $id)->first();
 
         if (empty($pdf)) {
-            return;
+            return Response::error($this, 'pdf_not_found');
         }
 
         $header = null;
@@ -57,7 +58,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($header)) {
-                    return;
+                    return Response::error($this, 'header_update_error');
                 }
             } else {
                 $header = Action::run(MarkdownStore::class, [
@@ -67,7 +68,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($header)) {
-                    return;
+                    return Response::error($this, 'header_store_error');
                 }
             }
         } else {
@@ -84,7 +85,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($main)) {
-                    return;
+                    return Response::error($this, 'main_update_error');
                 }
             } else {
                 $main = Action::run(MarkdownStore::class, [
@@ -94,7 +95,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($main)) {
-                    return;
+                    return Response::error($this, 'main_store_error');
                 }
             }
         } else {
@@ -111,7 +112,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($footer)) {
-                    return;
+                    return Response::error($this, 'footer_update_error');
                 }
             } else {
                 $footer = Action::run(MarkdownStore::class, [
@@ -121,7 +122,7 @@ class PdfUpdate extends Action
                 ])->getData('markdown');
 
                 if (empty($footer)) {
-                    return;
+                    return Response::error($this, 'footer_store_error');
                 }
             }
         } else {
@@ -146,19 +147,19 @@ class PdfUpdate extends Action
 
         if (!empty($header_raw)) {
             if ($header_raw != $header?->raw?->content()) {
-                return;
+                return Response::error($this, 'raw_header_mismatch');
             }
         }
 
         if (!empty($main_raw)) {
             if ($main_raw != $main?->raw?->content()) {
-                return;
+                return Response::error($this, 'raw_main_mismatch');
             }
         }
 
         if (!empty($footer_raw)) {
             if ($footer_raw != $footer?->raw?->content()) {
-                return;
+                return Response::error($this, 'raw_footer_mismatch');;
             }
         }
 

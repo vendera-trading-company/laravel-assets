@@ -6,6 +6,7 @@ use VenderaTradingCompany\LaravelAssets\Models\Pdf;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
 use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownStore;
+use VenderaTradingCompany\PHPActions\Response;
 
 class PdfStore extends Action
 {
@@ -43,7 +44,7 @@ class PdfStore extends Action
             ])->getData('markdown');
 
             if (empty($header)) {
-                return;
+                return Response::error($this, 'header_create_error');
             }
         }
 
@@ -55,7 +56,7 @@ class PdfStore extends Action
             ])->getData('markdown');
 
             if (empty($main)) {
-                return;
+                return Response::error($this, 'main_create_error');
             }
         }
 
@@ -67,7 +68,7 @@ class PdfStore extends Action
             ])->getData('markdown');
 
             if (empty($footer)) {
-                return;
+                return Response::error($this, 'footer_create_error');
             }
         }
 

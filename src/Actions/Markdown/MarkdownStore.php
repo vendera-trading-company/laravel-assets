@@ -6,6 +6,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\File\FileStore;
 use VenderaTradingCompany\LaravelAssets\Models\Markdown;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
+use VenderaTradingCompany\PHPActions\Response;
 
 class MarkdownStore extends Action
 {
@@ -36,7 +37,7 @@ class MarkdownStore extends Action
         ])->getData('file');
 
         if (empty($raw_file)) {
-            return;
+            return Response::error($this, 'raw_create_error');
         }
 
         $formatted_file = Action::run(FileStore::class, [
@@ -48,7 +49,7 @@ class MarkdownStore extends Action
         ])->getData('file');
 
         if (empty($formatted_file)) {
-            return;
+            return Response::error($this, 'formatted_create_error');
         }
 
         $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_markdown';

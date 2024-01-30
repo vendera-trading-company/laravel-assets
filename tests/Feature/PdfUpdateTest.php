@@ -62,6 +62,43 @@ class PdfUpdateTest extends TestCase
         $this->assertEquals('<h1>Footer Updated</h1>', $pdf->footer->formatted->content());
     }
 
+    public function testPdfUpdateNullToEmptyString() {
+        $pdf = $this->pdfCreate();
+
+        $this->assertNotEmpty($pdf);
+
+        $this->assertNull($pdf->footer?->raw?->content());
+        $this->assertNull($pdf->footer?->formatted?->content());
+        $this->assertNull($pdf->main?->raw?->content());
+        $this->assertNull($pdf->main?->formatted?->content());
+        $this->assertNull($pdf->header?->raw?->content());
+        $this->assertNull($pdf->header?->formatted?->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'main_raw' => 'Test Updated',
+            'main_formatted' => '<h1>Test Updated</h1>',
+            'header_raw' => '',
+            'header_formatted' => '',
+            'footer_raw' => '',
+            'footer_formatted' => ''
+        ]);
+
+        $this->assertEquals('Test Updated', $pdf->main->raw->content());
+        $this->assertEquals('<h1>Test Updated</h1>', $pdf->main->formatted->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'main_raw' => 'Test Updated 1',
+            'main_formatted' => '<h1>Test Updated 1</h1>',
+            'header_raw' => '',
+            'header_formatted' => '',
+            'footer_raw' => null,
+            'footer_formatted' => null
+        ]);
+
+        $this->assertEquals('Test Updated 1', $pdf->main->raw->content());
+        $this->assertEquals('<h1>Test Updated 1</h1>', $pdf->main->formatted->content());
+    }
+
     public function testPdfUpdateOnlyMain()
     {
         $pdf = $this->pdfCreate([
