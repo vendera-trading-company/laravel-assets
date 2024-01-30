@@ -100,4 +100,82 @@ class PdfUpdateTest extends TestCase
         $this->assertEquals('Test Updated 1', $pdf->main->raw->content());
         $this->assertEquals('<h1>Test Updated 1</h1>', $pdf->main->formatted->content());
     }
+
+    public function testPdfUpdateOnlyFooter()
+    {
+        $pdf = $this->pdfCreate([
+            'footer_raw' => 'Test',
+            'footer_formatted' => '<h1>Test</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test', $pdf->footer->raw->content());
+        $this->assertEquals('<h1>Test</h1>', $pdf->footer->formatted->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'footer_raw' => 'Test Updated',
+            'footer_formatted' => '<h1>Test Updated</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test Updated', $pdf->footer->raw->content());
+        $this->assertEquals('<h1>Test Updated</h1>', $pdf->footer->formatted->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'footer_raw' => 'Test Updated 1',
+            'footer_formatted' => '<h1>Test Updated 1</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test Updated 1', $pdf->footer->raw->content());
+        $this->assertEquals('<h1>Test Updated 1</h1>', $pdf->footer->formatted->content());
+    }
+
+    public function testPdfUpdateOnlyHeader()
+    {
+        $pdf = $this->pdfCreate([
+            'header_raw' => 'Test',
+            'header_formatted' => '<h1>Test</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test', $pdf->header->raw->content());
+        $this->assertEquals('<h1>Test</h1>', $pdf->header->formatted->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'header_raw' => 'Test Updated',
+            'header_formatted' => '<h1>Test Updated</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test Updated', $pdf->header->raw->content());
+        $this->assertEquals('<h1>Test Updated</h1>', $pdf->header->formatted->content());
+
+        $pdf = $this->pdfUpdate($pdf, [
+            'header_raw' => 'Test Updated 1',
+            'header_formatted' => '<h1>Test Updated 1</h1>'
+        ]);
+
+        $this->assertDatabaseCount('pdfs', 1);
+        $this->assertDatabaseCount('markdowns', 1);
+        $this->assertDatabaseCount('files', 2);
+
+        $this->assertEquals('Test Updated 1', $pdf->header->raw->content());
+        $this->assertEquals('<h1>Test Updated 1</h1>', $pdf->header->formatted->content());
+    }
 }
