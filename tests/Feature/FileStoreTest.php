@@ -36,13 +36,17 @@ class FileStoreTest extends TestCase
 
         $this->assertDatabaseCount('files', 0);
 
-        $file = Action::build(FileStore::class)->data([
-            'file' => 'test_file',
+        $response = Action::build(FileStore::class)->data([
+            'file' => 'data:text;base64,dGVzdF9maWxl',
             'path' => 'files',
             'database' => false,
         ])->options([
             'base64' => true
-        ])->run()->getData('file');
+        ])->run();
+
+        $file = $response->getData('file');
+
+        $this->assertEquals('test_file', $file->content());
 
         $this->assertNotEmpty($file);
 

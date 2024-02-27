@@ -8,6 +8,7 @@ use VenderaTradingCompany\PHPActions\Action;
 /**
  * @data mixed $data
  * @response mixed $data
+ * @response string $type
  */
 class Base64Decode extends Action
 {
@@ -24,12 +25,15 @@ class Base64Decode extends Action
         }
 
         try {
+            preg_match('/^.+\w+;base64,/', $data, $type);
+
             $data = preg_replace('/^.+\w+;base64,/', '', $data);
             $data = str_replace(' ', '+', $data);
 
             $data = base64_decode($data);
 
             return [
+                'type' => $type,
                 'data' => $data
             ];
         } catch (Exception $e) {
