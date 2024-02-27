@@ -28,6 +28,12 @@ class MarkdownStoreTest extends TestCase
         $this->assertDatabaseCount('markdowns', 1);
         $this->assertDatabaseCount('files', 2);
 
+        $this->assertNotEmpty($markdown->formatted->path());
+        $this->assertNotEmpty($markdown->raw->path());
+
+        $this->assertNotEmpty($markdown->formatted->content());
+        $this->assertNotEmpty($markdown->raw->content());
+
         $this->assertTrue(Storage::disk($markdown->formatted->disk)->exists($markdown->formatted->relative_path));
         $this->assertTrue(Storage::disk($markdown->raw->disk)->exists($markdown->raw->relative_path));
     }
