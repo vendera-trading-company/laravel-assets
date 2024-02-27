@@ -10,6 +10,7 @@ use VenderaTradingCompany\LaravelAssets\Models\File;
  * @data string $database
  * @data string $file
  * @data string $id
+ * @response File $file
  */
 class FileUpdate extends Action
 {

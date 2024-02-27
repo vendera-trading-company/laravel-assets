@@ -13,6 +13,7 @@ use VenderaTradingCompany\LaravelAssets\Models\File;
  * @data string $path
  * @data string $file
  * @data string $id
+ * @response File $file
  */
 class FileStore extends Action
 {

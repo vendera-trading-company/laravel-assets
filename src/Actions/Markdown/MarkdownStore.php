@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
  * @data string $id
  * @data string $raw
  * @data string $formatted
+ * @response Markdown $markdown
  */
 class MarkdownStore extends Action
 {

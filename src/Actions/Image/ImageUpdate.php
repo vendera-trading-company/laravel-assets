@@ -12,6 +12,7 @@ use VenderaTradingCompany\PHPActions\Action;
  * @data string $database
  * @data string $file
  * @data string $id
+ * @response Image $image
  */
 class ImageUpdate extends Action
 {

@@ -15,6 +15,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
  * @data string $path
  * @data string $file
  * @data string $id
+ * @response Image $image
  */
 class ImageStore extends Action
 {

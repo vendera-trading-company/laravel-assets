@@ -11,6 +11,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\File\FileUpdate;
  * @data string $id
  * @data string $raw
  * @data string $formatted
+ * @response Markdown $markdown
  */
 class MarkdownUpdate extends Action
 {

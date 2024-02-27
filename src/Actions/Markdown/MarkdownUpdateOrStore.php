@@ -13,6 +13,7 @@ use VenderaTradingCompany\PHPActions\Action;
  * @data string $id
  * @data string $raw
  * @data string $formatted
+ * @response Markdown $markdown
  */
 class MarkdownUpdateOrStore extends Action
 {

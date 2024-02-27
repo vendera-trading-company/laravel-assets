@@ -16,6 +16,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownUpdateOrStore;
  * @data string $footer_raw
  * @data string $fotter_formatted
  * @data array $fotter_formatted
+ * @response Pdf $pdf
  */
 class PdfUpdate extends Action
 {

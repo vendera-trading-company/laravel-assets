@@ -6,7 +6,8 @@ use Exception;
 use VenderaTradingCompany\PHPActions\Action;
 
 /**
- * @data string $data
+ * @data mixed $data
+ * @response mixed $data
  */
 class Base64Decode extends Action
 {

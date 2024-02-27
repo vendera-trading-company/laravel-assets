@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
  * @data string $path
  * @data string $name
  * @data string $relative_path
+ * @response mixed $relative_path
+ * @response mixed $disk
  */
 class AssetStore extends Action
 {
