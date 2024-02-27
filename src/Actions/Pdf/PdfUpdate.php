@@ -35,7 +35,7 @@ class PdfUpdate extends Action
     public function handle()
     {
         $id = $this->getData('id');
-        $database = $this->getData('database');
+        $database = $this->getData('database', true);
         $header_raw = $this->getData('header_raw');
         $header_formatted = $this->getData('header_formatted');
         $main_raw = $this->getData('main_raw');

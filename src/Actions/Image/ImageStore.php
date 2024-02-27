@@ -31,7 +31,7 @@ class ImageStore extends Action
     public function handle()
     {
         $file = $this->getData('file');
-        $database = $this->getData('database');
+        $database = $this->getData('database', false);
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');

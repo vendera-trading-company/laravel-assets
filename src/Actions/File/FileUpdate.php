@@ -8,6 +8,7 @@ use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Models\File;
 
 /**
+ * @option bool $base64
  * @data string $database
  * @data string $file
  * @data string $id

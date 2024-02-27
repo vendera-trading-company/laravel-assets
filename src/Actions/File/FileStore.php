@@ -9,6 +9,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
 use VenderaTradingCompany\LaravelAssets\Models\File;
 
 /**
+ * @option bool $base64
  * @data string $database
  * @data string $disk
  * @data string $path

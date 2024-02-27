@@ -26,7 +26,7 @@ class ImageUpdate extends Action
     {
         $file = $this->getData('file');
         $id = $this->getData('id');
-        $database = $this->getData('database');
+        $database = $this->getData('database', false);
 
         if (empty($id)) {
             return;
