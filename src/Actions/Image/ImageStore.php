@@ -6,6 +6,7 @@ use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
+use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
 
 /**
  * @option bool $base64
@@ -39,9 +40,9 @@ class ImageStore extends Action
         }
 
         if ($this->getOption('base64', false)) {
-            $file = Action::build(ImageBase64Decode::class)->data([
-                'image' => $file,
-            ])->run()->getData('image');
+            $file = Action::build(Base64Decode::class)->data([
+                'data' => $file,
+            ])->run()->getData('data');
         }
 
         if (empty($file)) {

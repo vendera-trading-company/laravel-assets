@@ -3,6 +3,7 @@
 namespace VenderaTradingCompany\LaravelAssets\Actions\Image;
 
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
+use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
 
@@ -41,9 +42,9 @@ class ImageUpdate extends Action
         }
 
         if ($this->getOption('base64', false)) {
-            $file = Action::build(ImageBase64Decode::class)->data([
-                'image' => $file,
-            ])->run()->getData('image');
+            $file = Action::build(Base64Decode::class)->data([
+                'data' => $file,
+            ])->run()->getData('data');
         }
 
         if (empty($file)) {
