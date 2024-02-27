@@ -6,6 +6,12 @@ use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
 
+/**
+ * @option bool $base64
+ * @data string $database
+ * @data string $file
+ * @data string $id
+ */
 class ImageUpdate extends Action
 {
     protected $secure = [

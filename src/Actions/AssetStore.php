@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Storage;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
 
+/**
+ * @data string $data
+ * @data string $disk
+ * @data string $path
+ * @data string $name
+ * @data string $relative_path
+ */
 class AssetStore extends Action
 {
     protected $secure = [

@@ -7,6 +7,13 @@ use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
 use VenderaTradingCompany\LaravelAssets\Models\File;
 
+/**
+ * @data string $database
+ * @data string $disk
+ * @data string $path
+ * @data string $file
+ * @data string $id
+ */
 class FileStore extends Action
 {
     protected $secure = [

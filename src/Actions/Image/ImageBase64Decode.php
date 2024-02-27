@@ -5,6 +5,9 @@ namespace VenderaTradingCompany\LaravelAssets\Actions\Image;
 use Exception;
 use VenderaTradingCompany\PHPActions\Action;
 
+/**
+ * @data string $image
+ */
 class ImageBase64Decode extends Action
 {
     protected $secure = [

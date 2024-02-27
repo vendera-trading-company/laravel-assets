@@ -7,6 +7,15 @@ use VenderaTradingCompany\LaravelAssets\Models\Markdown;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
 
+/**
+ * @data string $database
+ * @data string $disk
+ * @data string $path
+ * @data string $file
+ * @data string $id
+ * @data string $raw
+ * @data string $formatted
+ */
 class MarkdownStore extends Action
 {
     protected $secure = [

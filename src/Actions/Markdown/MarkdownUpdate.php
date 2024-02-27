@@ -6,6 +6,12 @@ use VenderaTradingCompany\LaravelAssets\Models\Markdown;
 use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Actions\File\FileUpdate;
 
+/**
+ * @data string $database
+ * @data string $id
+ * @data string $raw
+ * @data string $formatted
+ */
 class MarkdownUpdate extends Action
 {
     protected $secure = [

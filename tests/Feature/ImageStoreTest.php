@@ -29,6 +29,28 @@ class ImageStoreTest extends TestCase
         $this->assertEmpty($image->data);
     }
 
+    public function testImageCanBeStoredAsBase64()
+    {
+        Storage::fake('local');
+
+        $this->assertDatabaseCount('images', 0);
+
+        $image = Action::build(ImageStore::class)->data([
+            'file' => 'test_file',
+            'path' => 'images',
+        ])->options([
+            'base64' => true
+        ])->run()->getData('image');
+
+        $this->assertNotEmpty($image);
+
+        $this->assertDatabaseCount('images', 1);
+
+        $this->assertTrue(Storage::disk($image->disk)->exists($image->relative_path));
+
+        $this->assertEmpty($image->data);
+    }
+
     public function testImageCanBeStoredAsData()
     {
         Storage::fake('local');

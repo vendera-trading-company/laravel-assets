@@ -6,6 +6,17 @@ use VenderaTradingCompany\LaravelAssets\Models\Pdf;
 use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownUpdateOrStore;
 
+/**
+ * @data string $database
+ * @data string $id
+ * @data string $header_raw
+ * @data string $header_formatted
+ * @data string $main_raw
+ * @data string $main_formatted
+ * @data string $footer_raw
+ * @data string $fotter_formatted
+ * @data array $fotter_formatted
+ */
 class PdfUpdate extends Action
 {
     protected $secure = [

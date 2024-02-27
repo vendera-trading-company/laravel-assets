@@ -5,6 +5,15 @@ namespace VenderaTradingCompany\LaravelAssets\Actions\Markdown;
 use VenderaTradingCompany\LaravelAssets\Models\Markdown;
 use VenderaTradingCompany\PHPActions\Action;
 
+/**
+ * @data string $database
+ * @data string $disk
+ * @data string $path
+ * @data string $file
+ * @data string $id
+ * @data string $raw
+ * @data string $formatted
+ */
 class MarkdownUpdateOrStore extends Action
 {
     protected $secure = [

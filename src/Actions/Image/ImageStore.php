@@ -7,6 +7,14 @@ use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
 
+/**
+ * @option bool $base64
+ * @data string $database
+ * @data string $disk
+ * @data string $path
+ * @data string $file
+ * @data string $id
+ */
 class ImageStore extends Action
 {
     protected $secure = [
