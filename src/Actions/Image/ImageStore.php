@@ -16,7 +16,8 @@ class ImageStore extends Action
         'path',
         'name',
         'base64',
-        'file'
+        'file',
+        'id'
     ];
 
     public function handle()
@@ -36,7 +37,7 @@ class ImageStore extends Action
             $file = $this->decodeBase64Image($file);
         }
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_image';
+        $id = $this->getData('id', now()->timestamp . '_' . strtolower(Str::random(32)) . '_image');
 
         $image_data = [
             'id' => $id,

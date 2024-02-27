@@ -15,7 +15,8 @@ class MarkdownStore extends Action
         'name',
         'database',
         'raw',
-        'formatted'
+        'formatted',
+        'id'
     ];
 
     public function handle()
@@ -27,12 +28,15 @@ class MarkdownStore extends Action
         $raw = $this->getData('raw');
         $formatted = $this->getData('formatted');
 
+        $file_id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_markdown';
+
         $raw_file = Action::run(FileStore::class, [
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
             'file' => $raw,
-            'database' => $database
+            'database' => $database,
+            'id' => $file_id . '_raw',
         ])->getData('file');
 
         if (empty($raw_file)) {
@@ -44,14 +48,15 @@ class MarkdownStore extends Action
             'path' => $path,
             'name' => $name,
             'file' => $formatted,
-            'database' => $database
+            'database' => $database,
+            'id' => $file_id . '_formatted',
         ])->getData('file');
 
         if (empty($formatted_file)) {
             return;
         }
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_markdown';
+        $id = $this->getData('id', now()->timestamp . '_' . strtolower(Str::random(32)) . '_markdown');
 
         $markdown = Markdown::create([
             'id' => $id,

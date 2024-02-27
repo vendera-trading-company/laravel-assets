@@ -35,11 +35,14 @@ class PdfStore extends Action
         $main = null;
         $footer = null;
 
+        $file_id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_pdf_markdown';
+
         if (!empty($header_raw) && !empty($header_formatted)) {
             $header = Action::run(MarkdownStore::class, [
                 'raw' => $header_raw,
                 'formatted' => $header_formatted,
                 'database' => $database,
+                'id' => $file_id . '_header',
             ])->getData('markdown');
 
             if (empty($header)) {
@@ -52,6 +55,7 @@ class PdfStore extends Action
                 'raw' => $main_raw,
                 'formatted' => $main_formatted,
                 'database' => $database,
+                'id' => $file_id . '_main',
             ])->getData('markdown');
 
             if (empty($main)) {
@@ -64,6 +68,7 @@ class PdfStore extends Action
                 'raw' => $footer_raw,
                 'formatted' => $footer_formatted,
                 'database' => $database,
+                'id' => $file_id . '_footer',
             ])->getData('markdown');
 
             if (empty($footer)) {
@@ -71,7 +76,7 @@ class PdfStore extends Action
             }
         }
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_pdf';
+        $id = $this->getData('id', now()->timestamp . '_' . strtolower(Str::random(32)) . '_pdf');
 
         $pdf = Pdf::create([
             'id' => $id,

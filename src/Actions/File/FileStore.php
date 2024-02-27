@@ -14,7 +14,8 @@ class FileStore extends Action
         'disk',
         'path',
         'name',
-        'file'
+        'file',
+        'id'
     ];
 
     public function handle()
@@ -25,7 +26,7 @@ class FileStore extends Action
         $path = $this->getData('path');
         $name = $this->getData('name');
 
-        $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_file';
+        $id = $this->getData('id', now()->timestamp . '_' . strtolower(Str::random(32)) . '_file');
 
         $file_data = [
             'id' => $id,
