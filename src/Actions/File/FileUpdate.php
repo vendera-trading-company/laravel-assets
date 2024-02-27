@@ -3,6 +3,7 @@
 namespace VenderaTradingCompany\LaravelAssets\Actions\File;
 
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
+use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
 use VenderaTradingCompany\PHPActions\Action;
 use VenderaTradingCompany\LaravelAssets\Models\File;
 
@@ -34,6 +35,12 @@ class FileUpdate extends Action
 
         if (empty($file_model)) {
             return;
+        }
+
+        if ($this->getOption('base64', false)) {
+            $file = Action::build(Base64Decode::class)->data([
+                'data' => $file,
+            ])->run()->getData('data');
         }
 
         $file_data = [];

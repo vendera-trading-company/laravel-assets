@@ -30,6 +30,29 @@ class FileStoreTest extends TestCase
         $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
     }
 
+    public function testFileCanBeStoredAsBase64()
+    {
+        Storage::fake('local');
+
+        $this->assertDatabaseCount('files', 0);
+
+        $file = Action::build(FileStore::class)->data([
+            'file' => 'test_file',
+            'path' => 'files',
+            'database' => false,
+        ])->options([
+            'base64' => true
+        ])->run()->getData('file');
+
+        $this->assertNotEmpty($file);
+
+        $this->assertDatabaseCount('files', 1);
+
+        $this->assertNotEmpty($file->relative_path);
+
+        $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
+    }
+
     public function testFileCanBeStoredInDatabase()
     {
         Storage::fake('local');

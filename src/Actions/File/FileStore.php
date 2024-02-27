@@ -5,6 +5,7 @@ namespace VenderaTradingCompany\LaravelAssets\Actions\File;
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
 use VenderaTradingCompany\PHPActions\Action;
 use Illuminate\Support\Str;
+use VenderaTradingCompany\LaravelAssets\Actions\Base64Decode;
 use VenderaTradingCompany\LaravelAssets\Models\File;
 
 /**
@@ -33,6 +34,12 @@ class FileStore extends Action
         $database = $this->getData('database', true);
         $path = $this->getData('path');
         $name = $this->getData('name');
+
+        if ($this->getOption('base64', false)) {
+            $file = Action::build(Base64Decode::class)->data([
+                'data' => $file,
+            ])->run()->getData('data');
+        }
 
         $id = $this->getData('id', now()->timestamp . '_' . strtolower(Str::random(32)) . '_file');
 
