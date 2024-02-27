@@ -12,7 +12,6 @@ class ImageUpdate extends Action
     protected $secure = [
         'id',
         'database',
-        'base64',
         'file'
     ];
 
@@ -37,7 +36,7 @@ class ImageUpdate extends Action
             return;
         }
 
-        if ($base64) {
+        if ($this->getOption('base64', false)) {
             $file = $this->decodeBase64Image($file);
         }
 

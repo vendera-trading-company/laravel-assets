@@ -15,7 +15,6 @@ class ImageStore extends Action
         'disk',
         'path',
         'name',
-        'base64',
         'file',
         'id'
     ];
@@ -27,13 +26,12 @@ class ImageStore extends Action
         $disk = $this->getData('disk');
         $path = $this->getData('path');
         $name = $this->getData('name');
-        $base64 = $this->getData('base64');
 
         if (empty($file)) {
             return;
         }
 
-        if ($base64) {
+        if ($this->getOption('base64', false)) {
             $file = $this->decodeBase64Image($file);
         }
 
