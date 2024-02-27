@@ -32,21 +32,21 @@ class MarkdownUpdate extends Action
             return;
         }
 
-        $raw_file = Action::run(FileUpdate::class, [
+        $raw_file = Action::build(FileUpdate::class)->data([
             'id' => $markdown->raw_id,
             'file' => $raw,
             'database' => $database
-        ])->getData('file');
+        ])->run()->getData('file');
 
         if (empty($raw_file)) {
             return;
         }
 
-        $formatted_file = Action::run(FileUpdate::class, [
+        $formatted_file = Action::build(FileUpdate::class)->data([
             'id' => $markdown->formatted_id,
             'file' => $formatted,
             'database' => $database
-        ])->getData('file');
+        ])->run()->getData('file');
 
         if (empty($formatted_file)) {
             return;

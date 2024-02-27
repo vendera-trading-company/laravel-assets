@@ -51,12 +51,12 @@ class PdfUpdate extends Action
         $footer = null;
 
         if (!empty($header_raw) && !empty($header_formatted)) {
-            $header = Action::run(MarkdownUpdateOrStore::class, [
+            $header = Action::build(MarkdownUpdateOrStore::class)->data([
                 'id' => $pdf->header_id,
                 'raw' => $header_raw,
                 'formatted' => $header_formatted,
                 'database' => $database,
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($header)) {
                 return;
@@ -75,12 +75,12 @@ class PdfUpdate extends Action
         }
 
         if (!empty($main_raw) && !empty($main_formatted)) {
-            $main = Action::run(MarkdownUpdateOrStore::class, [
+            $main = Action::build(MarkdownUpdateOrStore::class)->data([
                 'id' => $pdf->main_id,
                 'raw' => $main_raw,
                 'formatted' => $main_formatted,
                 'database' => $database,
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($main)) {
                 return;
@@ -99,12 +99,12 @@ class PdfUpdate extends Action
         }
 
         if (!empty($footer_raw) && !empty($footer_formatted)) {
-            $footer = Action::run(MarkdownUpdateOrStore::class, [
+            $footer = Action::build(MarkdownUpdateOrStore::class)->data([
                 'id' => $pdf->footer_id,
                 'raw' => $footer_raw,
                 'formatted' => $footer_formatted,
                 'database' => $database,
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($footer)) {
                 return;

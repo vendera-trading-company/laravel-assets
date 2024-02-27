@@ -38,12 +38,12 @@ class PdfStore extends Action
         $file_id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_pdf_markdown';
 
         if (!empty($header_raw) && !empty($header_formatted)) {
-            $header = Action::run(MarkdownStore::class, [
+            $header = Action::build(MarkdownStore::class)->data([
                 'raw' => $header_raw,
                 'formatted' => $header_formatted,
                 'database' => $database,
                 'id' => $file_id . '_header',
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($header)) {
                 return;
@@ -51,12 +51,12 @@ class PdfStore extends Action
         }
 
         if (!empty($main_raw) && !empty($main_formatted)) {
-            $main = Action::run(MarkdownStore::class, [
+            $main = Action::build(MarkdownStore::class)->data([
                 'raw' => $main_raw,
                 'formatted' => $main_formatted,
                 'database' => $database,
                 'id' => $file_id . '_main',
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($main)) {
                 return;
@@ -64,12 +64,12 @@ class PdfStore extends Action
         }
 
         if (!empty($footer_raw) && !empty($footer_formatted)) {
-            $footer = Action::run(MarkdownStore::class, [
+            $footer = Action::build(MarkdownStore::class)->data([
                 'raw' => $footer_raw,
                 'formatted' => $footer_formatted,
                 'database' => $database,
                 'id' => $file_id . '_footer',
-            ])->getData('markdown');
+            ])->run()->getData('markdown');
 
             if (empty($footer)) {
                 return;

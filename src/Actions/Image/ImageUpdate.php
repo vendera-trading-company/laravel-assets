@@ -2,7 +2,6 @@
 
 namespace VenderaTradingCompany\LaravelAssets\Actions\Image;
 
-use Exception;
 use VenderaTradingCompany\LaravelAssets\Actions\AssetStore;
 use VenderaTradingCompany\LaravelAssets\Models\Image;
 use VenderaTradingCompany\PHPActions\Action;
@@ -19,7 +18,6 @@ class ImageUpdate extends Action
     {
         $file = $this->getData('file');
         $id = $this->getData('id');
-        $base64 = $this->getData('base64');
         $database = $this->getData('database');
 
         if (empty($id)) {
@@ -37,17 +35,23 @@ class ImageUpdate extends Action
         }
 
         if ($this->getOption('base64', false)) {
-            $file = $this->decodeBase64Image($file);
+            $file = Action::build(ImageBase64Decode::class)->data([
+                'image' => $file,
+            ])->run()->getData('image');
+        }
+
+        if (empty($file)) {
+            return;
         }
 
         $image_data = [];
 
         if (!$database) {
-            $stored_file = Action::run(AssetStore::class, [
+            $stored_file = Action::build(AssetStore::class)->data([
                 'disk' => $image->disk,
                 'relative_path' => $image->relative_path,
                 'data' => $file
-            ]);
+            ])->run();
 
             $relative_path = $stored_file->getData('relative_path');
             $disk = $stored_file->getData('disk');
@@ -70,21 +74,5 @@ class ImageUpdate extends Action
         return [
             'image' => $image
         ];
-    }
-
-    private function decodeBase64Image($data)
-    {
-        try {
-            $image = $data;
-            $image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
-            $image = str_replace(' ', '+', $image);
-
-            $image = base64_decode($image);
-
-            return $image;
-        } catch (Exception $e) {
-        }
-
-        return null;
     }
 }

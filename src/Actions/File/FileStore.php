@@ -33,12 +33,12 @@ class FileStore extends Action
         ];
 
         if (!$database) {
-            $stored_file = Action::run(AssetStore::class, [
+            $stored_file = Action::build(AssetStore::class)->data([
                 'name' => $name,
                 'disk' => $disk,
                 'path' => $path,
                 'data' => $file
-            ]);
+            ])->run();
 
             $relative_path = $stored_file->getData('relative_path');
             $disk = $stored_file->getData('disk');

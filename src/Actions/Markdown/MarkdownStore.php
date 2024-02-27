@@ -30,27 +30,27 @@ class MarkdownStore extends Action
 
         $file_id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_markdown';
 
-        $raw_file = Action::run(FileStore::class, [
+        $raw_file = Action::build(FileStore::class)->data([
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
             'file' => $raw,
             'database' => $database,
             'id' => $file_id . '_raw',
-        ])->getData('file');
+        ])->run()->getData('file');
 
         if (empty($raw_file)) {
             return;
         }
 
-        $formatted_file = Action::run(FileStore::class, [
+        $formatted_file = Action::build(FileStore::class)->data([
             'disk' => $disk,
             'path' => $path,
             'name' => $name,
             'file' => $formatted,
             'database' => $database,
             'id' => $file_id . '_formatted',
-        ])->getData('file');
+        ])->run()->getData('file');
 
         if (empty($formatted_file)) {
             return;

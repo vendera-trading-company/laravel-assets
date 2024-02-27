@@ -31,12 +31,12 @@ class MarkdownUpdateOrStore extends Action
             $markdown = Markdown::where('id', $id)->first();
 
             if (!empty($markdown)) {
-                $markdown = Action::run(MarkdownUpdate::class, [
+                $markdown = Action::build(MarkdownUpdate::class)->data([
                     'id' => $markdown->id,
                     'raw' => $raw,
                     'formatted' => $formatted,
                     'database' => $database,
-                ])->getData('markdown');
+                ])->run()->getData('markdown');
 
                 if (!empty($markdown)) {
                     return [
@@ -46,14 +46,14 @@ class MarkdownUpdateOrStore extends Action
             }
         }
 
-        $markdown = Action::run(MarkdownStore::class, [
+        $markdown = Action::build(MarkdownStore::class)->data([
             'raw' => $raw,
             'formatted' => $formatted,
             'database' => $database,
             'name' => $name,
             'disk' => $disk,
             'path' => $path,
-        ])->getData('markdown');
+        ])->run()->getData('markdown');
 
         if (empty($markdown)) {
             return;

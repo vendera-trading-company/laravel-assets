@@ -33,11 +33,11 @@ class FileUpdate extends Action
         $file_data = [];
 
         if (!$database) {
-            $stored_file = Action::run(AssetStore::class, [
+            $stored_file = Action::build(AssetStore::class)->data([
                 'disk' => $file_model->disk,
                 'relative_path' => $file_model->relative_path,
                 'data' => $file
-            ]);
+            ])->run();
 
             $relative_path = $stored_file->getData('relative_path');
             $disk = $stored_file->getData('disk');
