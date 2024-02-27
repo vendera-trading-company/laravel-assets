@@ -2,6 +2,7 @@
 
 namespace Workbench\App\Providers;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 
 class WorkbenchServiceProvider extends ServiceProvider
@@ -19,6 +20,6 @@ class WorkbenchServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+       $this->loadMigrationsFrom(__DIR__ . '/../../../src/database/migrations');
     }
 }

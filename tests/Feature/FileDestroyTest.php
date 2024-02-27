@@ -7,9 +7,9 @@ use Tests\TestCase;
 use VenderaTradingCompany\LaravelAssets\Actions\File\FileStore;
 use VenderaTradingCompany\PHPActions\Action;
 
-class FileStoreTest extends TestCase
+class FileDestroyTest extends TestCase
 {
-    public function testFileCanBeStored()
+    public function testFileCanBeDeleted()
     {
         Storage::fake('local');
 
@@ -28,9 +28,15 @@ class FileStoreTest extends TestCase
         $this->assertNotEmpty($file->relative_path);
 
         $this->assertTrue(Storage::disk($file->disk)->exists($file->relative_path));
+
+        $file->delete();
+
+        $this->assertFalse(Storage::disk($file->disk)->exists($file->relative_path));
+
+        $this->assertDatabaseCount('files', 0);
     }
 
-    public function testFileCanBeStoredInDatabase()
+    public function testFileCanBeDeletedWhenStoredInDatabase()
     {
         Storage::fake('local');
 
@@ -46,5 +52,9 @@ class FileStoreTest extends TestCase
         $this->assertDatabaseCount('files', 1);
 
         $this->assertEmpty($file->relative_path);
+
+        $file->delete();
+
+        $this->assertDatabaseCount('files', 0);
     }
 }

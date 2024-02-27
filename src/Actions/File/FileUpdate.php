@@ -18,7 +18,7 @@ class FileUpdate extends Action
     {
         $id = $this->getData('id');
         $file = $this->getData('file');
-        $database = $this->getData('database');
+        $database = $this->getData('database', true);
 
         if (empty($id)) {
             return;
