@@ -3,6 +3,8 @@
 namespace VenderaTradingCompany\LaravelAssets\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use VenderaTradingCompany\LaravelAssets\Actions\File\FileDestroy;
+use VenderaTradingCompany\PHPActions\Action;
 
 class Markdown extends Model
 {
@@ -21,8 +23,12 @@ class Markdown extends Model
         parent::boot();
 
         static::deleting(function ($model) {
-            $model->raw?->delete();
-            $model->formatted?->delete();
+            Action::build(FileDestroy::class)->data([
+                'id' => $model->raw_id,
+            ])->run();
+            Action::build(FileDestroy::class)->data([
+                'id' => $model->formatted_id,
+            ])->run();
         });
     }
 

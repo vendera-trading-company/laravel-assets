@@ -3,6 +3,8 @@
 namespace VenderaTradingCompany\LaravelAssets\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use VenderaTradingCompany\LaravelAssets\Actions\Markdown\MarkdownDestroy;
+use VenderaTradingCompany\PHPActions\Action;
 
 class Pdf extends Model
 {
@@ -25,9 +27,15 @@ class Pdf extends Model
         parent::boot();
 
         static::deleting(function ($model) {
-            $model->header?->delete();
-            $model->main?->delete();
-            $model->footer?->delete();
+            Action::build(MarkdownDestroy::class)->data([
+                'id' => $model->header_id,
+            ])->run();
+            Action::build(MarkdownDestroy::class)->data([
+                'id' => $model->main_id,
+            ])->run();
+            Action::build(MarkdownDestroy::class)->data([
+                'id' => $model->footer_id,
+            ])->run();
         });
     }
 
