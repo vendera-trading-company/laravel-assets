@@ -15,18 +15,18 @@ class LaravelAssetsProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../database/migrations/2023_01_01_000000_create_images_table.php' => database_path('migrations/2023_01_01_000000_create_images_table.php')
-        ], 'laravel-assets-migrations-images');
+        ], 'vendera-trading-company/laravel-assets/migrations-images');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/2023_01_01_000001_create_files_table.php' => database_path('migrations/2023_01_01_000001_create_files_table.php')
-        ], 'laravel-assets-migrations-files');
+        ], 'vendera-trading-company/laravel-assets/migrations-files');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/2023_01_01_000002_create_markdowns_table.php' => database_path('migrations/2023_01_01_000002_create_markdowns_table.php')
-        ], 'laravel-assets-migrations-markdowns');
+        ], 'vendera-trading-company/laravel-assets/migrations-markdowns');
 
         $this->publishes([
             __DIR__ . '/../database/migrations/2023_01_01_000003_create_pdfs_table.php' => database_path('migrations/2023_01_01_000003_create_pdfs_table.php')
-        ], 'laravel-assets-migrations-pdfs');
+        ], 'vendera-trading-company/laravel-assets/migrations-pdfs');
     }
 }

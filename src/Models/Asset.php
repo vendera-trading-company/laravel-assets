@@ -79,6 +79,14 @@ abstract class Asset extends Model
 
     public function download(string | null $name = null, array $headers = []): mixed
     {
+        if (!empty($this->data)) {
+            $data = $this->data;
+
+            return response()->stream(function () use ($data) {
+                fpassthru($data);
+            }, 200, $headers);
+        }
+
         if (empty($this->relative_path)) {
             return null;
         }
@@ -87,6 +95,6 @@ abstract class Asset extends Model
             return Storage::disk($this->disk)->download($this->relative_path, $name, $headers);
         }
 
-        return Storage::get($this->relative_path, $name, $headers);
+        return Storage::download($this->relative_path, $name, $headers);
     }
 }
