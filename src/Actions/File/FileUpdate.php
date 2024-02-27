@@ -11,14 +11,12 @@ class FileUpdate extends Action
     protected $secure = [
         'database',
         'id',
-        'url',
         'file'
     ];
 
     public function handle()
     {
         $id = $this->getData('id');
-        $url = $this->getData('url');
         $file = $this->getData('file');
         $database = $this->getData('database');
 
@@ -30,18 +28,6 @@ class FileUpdate extends Action
 
         if (empty($file_model)) {
             return;
-        }
-
-        if (empty($url) && empty($file)) {
-            return;
-        }
-
-        if (!empty($url)) {
-            $file = file_get_contents($url);
-
-            if (empty($file)) {
-                return;
-            }
         }
 
         $file_data = [];

@@ -14,30 +14,16 @@ class FileStore extends Action
         'disk',
         'path',
         'name',
-        'url',
         'file'
     ];
 
     public function handle()
     {
-        $url = $this->getData('url');
         $file = $this->getData('file');
         $disk = $this->getData('disk');
-        $database = $this->getData('database');
+        $database = $this->getData('database', true);
         $path = $this->getData('path');
         $name = $this->getData('name');
-
-        if (empty($url) && empty($file)) {
-            return;
-        }
-
-        if (!empty($url)) {
-            $file = file_get_contents($url);
-
-            if (empty($file)) {
-                return;
-            }
-        }
 
         $id = now()->timestamp . '_' . strtolower(Str::random(32)) . '_file';
 

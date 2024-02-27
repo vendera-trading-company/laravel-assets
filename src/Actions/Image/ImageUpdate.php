@@ -13,13 +13,11 @@ class ImageUpdate extends Action
         'id',
         'database',
         'base64',
-        'url',
         'file'
     ];
 
     public function handle()
     {
-        $url = $this->getData('url');
         $file = $this->getData('file');
         $id = $this->getData('id');
         $base64 = $this->getData('base64');
@@ -35,16 +33,8 @@ class ImageUpdate extends Action
             return;
         }
 
-        if (empty($url) && empty($file)) {
+        if (empty($file)) {
             return;
-        }
-
-        if (!empty($url)) {
-            $file = file_get_contents($url);
-
-            if (empty($file)) {
-                return;
-            }
         }
 
         if ($base64) {

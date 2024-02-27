@@ -16,13 +16,11 @@ class ImageStore extends Action
         'path',
         'name',
         'base64',
-        'url',
         'file'
     ];
 
     public function handle()
     {
-        $url = $this->getData('url');
         $file = $this->getData('file');
         $database = $this->getData('database');
         $disk = $this->getData('disk');
@@ -30,16 +28,8 @@ class ImageStore extends Action
         $name = $this->getData('name');
         $base64 = $this->getData('base64');
 
-        if (empty($url) && empty($file)) {
+        if (empty($file)) {
             return;
-        }
-
-        if (!empty($url)) {
-            $file = file_get_contents($url);
-
-            if (empty($file)) {
-                return;
-            }
         }
 
         if ($base64) {
